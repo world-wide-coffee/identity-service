@@ -1,0 +1,52 @@
+syntax = "proto3";
+package identity_service;
+
+option go_package = "github.com/world-wide-coffee/identity-service";
+
+service IdentityService {
+  rpc SignUp (SignUpRequest) returns (SignUpReply) {}
+  rpc SignIn (SignInRequest) returns (SignInReply) {}
+  rpc ChangePassword (ChangePasswordRequest) returns (ChangePasswordReply) {}
+  rpc JWKs (JWKsRequest) returns (JWKsReply) {}
+}
+
+message SignUpRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message SignUpReply {
+  string id = 1;
+}
+
+message SignInRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message SignInReply {
+  string access_token = 1;
+}
+
+message JWKsRequest {}
+
+message JWKsReply {
+  repeated JWK keys = 1;
+}
+
+message JWK {
+  string key_id = 1;
+  string key_type = 2;
+  string algorithm = 3;
+  string key = 4;
+  string use = 5;
+}
+
+message ChangePasswordRequest {
+  string access_token = 1;
+  string id = 2;
+  string new_password = 3;
+  string old_password = 4;
+}
+
+message ChangePasswordReply {}
